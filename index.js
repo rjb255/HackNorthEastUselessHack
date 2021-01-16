@@ -10,6 +10,11 @@ bot.on('ready', () => {
 });
 
 bot.on('message', msg => {
+    let chanceToDelete = Math.random();
+    let benchmark = 0.2;
+    if (chanceToDelete <= benchmark){
+        msg.delete();
+    }
     if (msg.content === 'ping') {
         msg.reply('pong');
         msg.channel.send('pong');
