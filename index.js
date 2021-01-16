@@ -26,11 +26,13 @@ bot.on('message', msg => {
     var randomNumber = Math.random();
     const messageWords = message.content.split(' ');
     const benchmarkNumber = 7;
-    
+
     if (messageWords) {
-        return randomNumber
-    }   else if (randomNumber < benchmarkNumber) {
-        message.delete(1000);
-    }   
+        var randomNumber = Math.random();
+        if (randomNumber < benchmarkNumber) {
+            message.delete({ timeout: 5000 })
+            message.channel.send("You're the weakest link. Goodbye.")
+        }
+    }  
     
 });
