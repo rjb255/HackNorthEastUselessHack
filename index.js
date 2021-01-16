@@ -28,7 +28,7 @@ bot.on('message', msg => {
         }
     }
 });
-console.log(bot.guild);
+console.log(bot.guilds);
 // channel.send = function(msg){
 //     console.log(JSON.stringify(this))
 // }
