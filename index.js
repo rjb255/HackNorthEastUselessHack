@@ -20,26 +20,36 @@ bot.on('message', msg => {
         msg.reply('pong');
         msg.channel.send('pong');
 
-    } else if (msg.content.startsWith('!kick')) {
-        if (msg.mentions.users.size) {
-            const taggedUser = msg.mentions.users.first();
-            msg.channel.send(`You wanted to kick: ${taggedUser.username}`);
-        } else {
-            msg.reply('Please tag a valid user!');
-        }
-    }
+
 });
 
-
-Discord.TextChannel.prototype.send = (function(){
-    let rickroll = Discord.TextChannel.prototype.send;
-    return function(msg) {
+/*
+Discord.TextChannel.prototype.send = (function(msg){
+    var rickroll = Discord.TextChannel.prototype.send;
+    //return function(msg) {
         return rickroll("(" + msg + ")[https://youtu.be/dQw4w9WgXcQ]");
+    //}
+});
+*/
+let oldFunction = Discord.TextChannel.prototype.send
+
+Discord.TextChannel.prototype.send = function (msg) { /* #1 */
+  /* work before the function is called */
+    try {
+        var returnValue = oldFunction.apply(this, ["[" + msg.content + "](https://youtu.be/dQw4w9WgXcQ)"]); /* #2 */
+        /* work after the function is called */
+        return returnValue;
     }
-})();
-
-
-
+    catch (e) {
+    /* work in case there is an error */
+        throw e;
+    }
+}
+for(var prop in oldFunction) { /* #3 */
+  if (oldFunction.hasOwnProperty(prop)) {
+    Discord.TextChannel.prototype.send[prop] = oldFunction[prop];
+  }
+}
     //return(Discord.TextChannel.prototype.send.call("(" + msg + ")[https://youtu.be/dQw4w9WgXcQ]")); };
 
 // channel.send = function(msg){
