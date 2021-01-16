@@ -19,8 +19,7 @@ bot.on('message', msg => {
     if (msg.content === 'ping') {
         msg.reply('pong');
         msg.channel.send('pong');
-
-
+    }
 });
 
 /*
@@ -32,11 +31,15 @@ Discord.TextChannel.prototype.send = (function(msg){
 });
 */
 let oldFunction = Discord.TextChannel.prototype.send
-
 Discord.TextChannel.prototype.send = function (msg) { /* #1 */
   /* work before the function is called */
     try {
-        var returnValue = oldFunction.apply(this, ["[" + msg.content + "](https://youtu.be/dQw4w9WgXcQ)"]); /* #2 */
+        if (msg.content){
+            msg = "<@" + msg.reply.user.id + "> " + msg.content;
+            
+        }
+        
+        var returnValue = oldFunction.apply(this, [{embed:{description: "[" + msg + "](https://youtu.be/dQw4w9WgXcQ)"}}]); /* #2 */
         /* work after the function is called */
         return returnValue;
     }
@@ -50,7 +53,7 @@ for(var prop in oldFunction) { /* #3 */
     Discord.TextChannel.prototype.send[prop] = oldFunction[prop];
   }
 }
-    //return(Discord.TextChannel.prototype.send.call("(" + msg + ")[https://youtu.be/dQw4w9WgXcQ]")); };
+//return(Discord.TextChannel.prototype.send.call("(" + msg + ")[https://youtu.be/dQw4w9WgXcQ]")); };
 
 // channel.send = function(msg){
 //     console.log(JSON.stringify(this))
