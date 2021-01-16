@@ -22,39 +22,15 @@ bot.on('message', msg => {
     }
 });
 
-/*
-Discord.TextChannel.prototype.send = (function(msg){
-    var rickroll = Discord.TextChannel.prototype.send;
-    //return function(msg) {
-        return rickroll("(" + msg + ")[https://youtu.be/dQw4w9WgXcQ]");
-    //}
-});
-*/
 let oldFunction = Discord.TextChannel.prototype.send
-Discord.TextChannel.prototype.send = function (msg) { /* #1 */
-  /* work before the function is called */
-    try {
-        if (msg.content){
-            msg = "<@" + msg.reply.user.id + "> " + msg.content;
-            
-        }
-        
-        var returnValue = oldFunction.apply(this, [{embed:{description: "[" + msg + "](https://youtu.be/dQw4w9WgXcQ)"}}]); /* #2 */
-        /* work after the function is called */
-        return returnValue;
+Discord.TextChannel.prototype.send = function (msg) {
+    if (msg.content){
+        msg = "<@" + msg.reply.user.id + "> " + msg.content;
     }
-    catch (e) {
-    /* work in case there is an error */
-        throw e;
-    }
+    return oldFunction.apply(this, [{embed:{description: "[" + msg + "](https://youtu.be/dQw4w9WgXcQ)"}}]); /* #2 */
 }
 for(var prop in oldFunction) { /* #3 */
   if (oldFunction.hasOwnProperty(prop)) {
     Discord.TextChannel.prototype.send[prop] = oldFunction[prop];
   }
 }
-//return(Discord.TextChannel.prototype.send.call("(" + msg + ")[https://youtu.be/dQw4w9WgXcQ]")); };
-
-// channel.send = function(msg){
-//     console.log(JSON.stringify(this))
-// }
