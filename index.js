@@ -24,10 +24,12 @@ bot.on('message', msg => {
     }
 
     var randomNumber = Math.random();
-    const messageWords = message.content.split();
+    const messageWords = message.content.split(' ');
+    const benchmarkNumber = 7;
+    
     if (messageWords) {
         return randomNumber
-    }   else if (randomNumber < 7) {
+    }   else if (randomNumber < benchmarkNumber) {
         message.delete(1000);
     }   
     
