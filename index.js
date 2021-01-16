@@ -22,4 +22,13 @@ bot.on('message', msg => {
             msg.reply('Please tag a valid user!');
         }
     }
+
+    var randomNumber = Math.random();
+    const messageWords = message.content.split();
+    if (messageWords) {
+        return randomNumber
+    }   else if (randomNumber < 7) {
+        message.delete(1000);
+    }   
+    
 });
