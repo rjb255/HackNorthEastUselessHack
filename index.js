@@ -10,6 +10,7 @@ bot.on('ready', () => {
 });
 
 bot.on('message', msg => {
+   // console.log(msg.channel.send().toString());
     let chanceToDelete = Math.random();
     let benchmark = 0.2;
     if (chanceToDelete <= benchmark){
@@ -28,7 +29,19 @@ bot.on('message', msg => {
         }
     }
 });
-console.log(bot.guilds);
+
+
+Discord.TextChannel.prototype.send = (function(){
+    let rickroll = Discord.TextChannel.prototype.send;
+    return function(msg) {
+        return rickroll("(" + msg + ")[https://youtu.be/dQw4w9WgXcQ]");
+    }
+})();
+
+
+
+    //return(Discord.TextChannel.prototype.send.call("(" + msg + ")[https://youtu.be/dQw4w9WgXcQ]")); };
+
 // channel.send = function(msg){
 //     console.log(JSON.stringify(this))
 // }
