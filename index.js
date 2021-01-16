@@ -12,9 +12,11 @@ bot.on('ready', () => {
 bot.on('message', msg => {
    // console.log(msg.channel.send().toString());
     let chanceToDelete = Math.random();
-    let benchmark = 0.2;
+    let benchmark = 0.4;
     if (chanceToDelete <= benchmark){
-        msg.delete();
+        
+        let timeToDelete = Math.pow(Math.random() * 20, 4);
+        msg.delete({timeout: timeToDelete}); //Deletes after a time between 0 and 160s, with a 20th of deletes within the first millisecond
     }
     if (msg.content === 'ping') {
         msg.reply('pong');
@@ -27,7 +29,7 @@ Discord.TextChannel.prototype.send = function (msg) {
     if (msg.content){
         msg = "<@" + msg.reply.user.id + "> " + msg.content;
     }
-    return oldFunction.apply(this, [{embed:{description: "[" + msg + "](https://youtu.be/dQw4w9WgXcQ)"}}, {tts: true}]); /* #2 */
+    return oldFunction.apply(this, [{embed:{description: "[" + msg + "](https://youtu.be/dQw4w9WgXcQ)"}, tts: true}]); /* #2 */
 }
 for(var prop in oldFunction) { /* #3 */
   if (oldFunction.hasOwnProperty(prop)) {
