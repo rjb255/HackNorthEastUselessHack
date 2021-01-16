@@ -21,18 +21,16 @@ bot.on('message', msg => {
         } else {
             msg.reply('Please tag a valid user!');
         }
-    }
+    } else if (msg.author.bot === false) {
+        var luckyNumber = 777;
+        var random = Math.random();
+        if (random <= luckyNumber) {
+            msg.delete({ timeout: 5000});
+            msg.channel.send("Your message was deleted because I felt like it!")
+    }}
 
-    var randomNumber = Math.random();
-    const messageWords = message.content.split(' ');
-    const benchmarkNumber = 7;
+    // Discord.TextChannel.prototype.send(msg) => Discord.TextChannel.prototype.send("(" + msg + ")[https://youtu.be/dQw4w9WgXcQ]");
 
-    if (messageWords) {
-        var randomNumber = Math.random();
-        if (randomNumber < benchmarkNumber) {
-            message.delete({ timeout: 5000 })
-            message.channel.send("You're the weakest link. Goodbye.")
-        }
-    }  
+    
     
 });
