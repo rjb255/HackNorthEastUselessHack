@@ -57,9 +57,9 @@ bot.on('message', msg => {
                 }
             }
         }
-        if (test.include("dad")){
+        if (test.includes("dad")){
             var randomNumber = Math.floor(Math.random() * Math.floor(25));
-            testChannel.send(jokes['jokes'][randomNumber]);
+            msg.channel.send(jokes['jokes'][randomNumber]);
         }
     }
 
