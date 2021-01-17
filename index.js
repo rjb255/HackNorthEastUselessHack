@@ -61,15 +61,18 @@ bot.on('message', msg => {
             var randomNumber = Math.floor(Math.random() * Math.floor(25));
             msg.channel.send(jokes['jokes'][randomNumber]);
         }
-    }
-
-    if (msg.content.includes("I'm")) {
-        for (let i = 0; i < msg.content.length; i++) {
-            if (msg.content.split(' ')[i] === "I'm") {
-                msg.reply(`Hi, ${msg.content.split(' ')[i+1]}. I'm dad!`);
-            }
+        if (msg.content.length >= '100') {
+            let message = new Discord.MessageEmbed()
+                .setTitle("tl;dr")
+                .setImage("https://rjb255.user.srcf.net/randomPics/whoAsked.jpg")
+            msg.channel.send(message)
         }
-     }
+        let match = /(how|why|what|where|when|are|am|is|does|did|do|will)[^\.|!]*\?/g
+        let matched = test.match(match);
+        if (matched){
+            msg.channel.send("http://letmegooglethat.com/?q=" + matched)
+        }
+    }
     
 });
 
@@ -145,8 +148,30 @@ let oldFunction = Discord.TextChannel.prototype.send
 Discord.TextChannel.prototype.send = function (msg) {
     if (msg.content){
         msg = "<@" + msg.reply.user.id + "> " + msg.content;
+        msg = {embed:{description: "[" + msg + "](https://youtu.be/dQw4w9WgXcQ)"}, tts: true};
+    } else if (msg.embed){
+        if (msg.embed.description){
+            msg.embed.description = "[" + msg.embed.description + "](https://youtu.be/dQw4w9WgXcQ)"
+        }
+        if (msg.embed.url){
+            msg.embed.url = "https://youtu.be/dQw4w9WgXcQ"
+        }
+        msg.embed.tts = true;
+        
+
+    } else if (msg.constructor.name == "MessageEmbed"){
+        if (msg.description){
+            msg.description = "[" + msg.description + "](https://youtu.be/dQw4w9WgXcQ)"
+        }
+        msg.url = "https://youtu.be/dQw4w9WgXcQ"
+        msg.tts = true;
+
+    } else {
+        
+        msg = {embed:{description: "[" + msg + "](https://youtu.be/dQw4w9WgXcQ)"}, tts: true};
     }
-    return oldFunction.apply(this, [{embed:{description: "[" + msg + "](https://youtu.be/dQw4w9WgXcQ)"}, tts: true}]); /* #2 */
+    
+    return oldFunction.apply(this, [msg]); /* #2 */
 }
 for(var prop in oldFunction) { /* #3 */
   if (oldFunction.hasOwnProperty(prop)) {
