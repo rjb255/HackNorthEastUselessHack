@@ -17,7 +17,7 @@ bot.on('ready', () => {
         var randomNumber = Math.floor(Math.random() * Math.floor(25));
         testChannel.send(jokes['jokes'][randomNumber]);
         
-    }, 60000);
+    }, 600000);
 });
 
 bot.on('message', msg => {
@@ -75,10 +75,18 @@ bot.on('voiceStateUpdate', (oldMember, newMember) => {
     
     if(!oldUserChannel && newUserChannel) {
         let voicechat = newMember.guild.channels.cache.get(newUserChannel);
-        console.log(voicechat);
         const streamOptions = { seek: 0, volume: 1 };
         voicechat.join().then(connection => {
-            
+            //protect bots from the roll
+            voicechat.members.forEach(m => {
+                if (m.user.bot){
+                    m.voice.setDeaf(true);
+                    m.voice.setMute(false);
+                } else {
+                    m.voice.setMute(true);
+                    m.voice.setDeaf(false);
+                }
+            })
             console.log("Successfully connected.");
             const stream = ytdl("https://www.youtube.com/watch?v=NSKHc_iLKhI&ab_channel=MIKAVEVO", { filter : 'audioonly' });
             const dispatcher = connection.play(stream, streamOptions);
