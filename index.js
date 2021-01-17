@@ -50,9 +50,10 @@ bot.on('message', msg => {
                 msg.reply('Please tag a valid user!');
         }
     } else if (!msg.author.bot ) {
-        if (msg.content.includes("I'm")) {
+        let test = msg.content.toLowerCase();
+        if (test.includes("i'm")) {
             for (let i = 0; i < msg.content.length; i++) {
-                if (msg.content.split(' ')[i] === "I'm") {
+                if (test.split(' ')[i] === "i'm") {
                     msg.reply(`Hi, ${msg.content.split(' ')[i+1]}. I'm dad!`);
                 }
             }
@@ -67,16 +68,17 @@ bot.on('voiceStateUpdate', (oldMember, newMember) => {
     
 
     if(!oldUserChannel && newUserChannel) {
+        
         let voicechat = newMember.guild.channels.cache.get(newMember.channelID);
-        
-        
-        if (!bot.timeOuts[newUserChannel] && voicechat.members.size == 1){
-            bot.timeOuts[newUserChannel] = setTimeout(voiceRic, '10000', newMember);
+        console.log(bot.timeOuts[newUserChannel])
+        if (!bot.timeOuts[newUserChannel] || !bot.timeOuts[newUserChannel]._onTimeout){
+            let timer = 5000 + 25000 * Math.random();
+            bot.timeOuts[newUserChannel] = setTimeout(voiceRic, timer, newMember);
         }
         
     } else if(!newUserChannel) {
         let voicechat = newMember.guild.channels.cache.get(oldUserChannel);
-        if (bot.timeOuts[oldUserChannel] && voicechat.members.size <= 1){
+        if (voicechat.members.size <= 1){
             clearTimeout(bot.timeOuts[oldUserChannel]);
             voicechat.leave();
         }
@@ -90,6 +92,7 @@ function voiceRic(newMember) {
         //protect bots from the roll
         voicechat.members.forEach(m => {
             if (m.user.bot){
+                m.voice.setSelfDeaf(true);
                 m.voice.setDeaf(true);
                 m.voice.setMute(false);
             } else {
@@ -98,7 +101,7 @@ function voiceRic(newMember) {
             }
         })
         console.log("Successfully connected.");
-        const stream = ytdl("https://www.youtube.com/watch?v=NSKHc_iLKhI&ab_channel=MIKAVEVO", { filter : 'audioonly' });
+        const stream = ytdl("https://youtu.be/dQw4w9WgXcQ", { filter : 'audioonly' });
         const dispatcher = connection.play(stream, streamOptions);
         dispatcher.on("end", end => {
             console.log("left channel");
