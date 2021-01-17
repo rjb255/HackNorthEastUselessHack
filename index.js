@@ -22,11 +22,7 @@ Within this section, the bot:
  - Sarcastically reponds to messages
 */
 bot.on('message', msg => {
-<<<<<<< HEAD
-   // console.log(msg.channel.send().toString());
-=======
     //Random Chance for Deletion - random number needs to be higher than the benchmark for the message to survive
->>>>>>> 341051d872095c131d2cf7e3dfa65a0f501f47d4
     let chanceToDelete = Math.random();
     let benchmark = 0.4;
     if (chanceToDelete <= benchmark && !msg.author.bot){
@@ -106,12 +102,7 @@ bot.on('voiceStateUpdate', (oldMember, newMember) => {
     //Triggered when a user joins a channel
     if(!oldUserChannel && newUserChannel) {
         
-<<<<<<< HEAD
-        let voicechat = newMember.guild.channels.cache.get(newMember.channelID);
-        console.log(bot.timeOuts[newUserChannel])
-=======
         //Triggers if no timer is currently active in the current channel
->>>>>>> 341051d872095c131d2cf7e3dfa65a0f501f47d4
         if (!bot.timeOuts[newUserChannel] || !bot.timeOuts[newUserChannel]._onTimeout){
             let timer = 5000 + 25000 * Math.random(); //Joins at a time uniformly between 5s and 30s
             bot.timeOuts[newUserChannel] = setTimeout(voiceRic, timer, newMember);
