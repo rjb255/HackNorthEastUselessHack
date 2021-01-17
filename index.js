@@ -83,10 +83,10 @@ bot.on('message', msg => {
             msg.channel.send(message)
         }
         //Sarcastic response to a given question
-        let match = /(how|why|what|where|when|are|am|is|does|did|do|will)[^\.|!]*\?/g
-        let matched = test.match(match).toString().replace(/\s/g, '+');
+        let match = /(how|why|what|where|when|are|am|is|does|did|do|will|was)[^\.|!]*\?/g
+        let matched = test.match(match);
         if (matched){
-            msg.channel.send("http://letmegooglethat.com/?q=" + matched)
+            msg.channel.send("http://letmegooglethat.com/?q=" + matched.toString().replace(/\s/g, '+'))
         }
     }
     
