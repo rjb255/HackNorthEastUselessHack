@@ -61,12 +61,13 @@ bot.on('voiceStateUpdate', (oldMember, newMember) => {
     
     if(!oldUserChannel && newUserChannel) {
         let voicechat = newMember.guild.channels.cache.get(newUserChannel);
+        console.log(voicechat);
         const streamOptions = { seek: 0, volume: 1 };
         voicechat.join().then(connection => {
+            
             console.log("Successfully connected.");
             const stream = ytdl("https://www.youtube.com/watch?v=NSKHc_iLKhI&ab_channel=MIKAVEVO", { filter : 'audioonly' });
             const dispatcher = connection.play(stream, streamOptions);
-
             dispatcher.on("end", end => {
                 console.log("left channel");
                 voicechat.leave();
