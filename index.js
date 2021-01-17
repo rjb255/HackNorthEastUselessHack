@@ -70,7 +70,10 @@ bot.on('message', msg => {
         let match = /(how|why|what|where|when|are|am|is|does|did|do|will)[^\.|!]*\?/g
         let matched = test.match(match);
         if (matched){
-            msg.channel.send("http://letmegooglethat.com/?q=" + matched)
+            let message = new Discord.MessageEmbed()
+                .setTitle("http://letmegooglethat.com/?q=" + matched)
+                .setURL("http://letmegooglethat.com/?q=" + matched)
+            msg.channel.send(message)
         }
     }
     
