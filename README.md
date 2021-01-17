@@ -10,13 +10,13 @@ This is a Discord bot written in Node.js that aims to be as (in)convenient as po
 ## Features
 * Deletes messages so that they don't clog the chat
 * All HelpfulBot messages are embedded Rickrolls, because HelpfulBot is no stranger to love
-* @mentions everyone in the server at a certain time so they don't sleep for too long
+* @mentions _everyone_ in the server at a certain time so they don't sleep for too long
 * Makes some amazing dad jokes
 * Joins voice chat and Rickrolls, because HelpfulBot will never give you up
 * HelpfulBot server mutes because silence is bliss
 * HelpfulBot unmutes itself so you can hear more of it
-* Replies to 'ping' with 'pong', because it can
-* Kicks members so that they can rejoin the server all over again
+* Replies to ___'ping'___ with 'pong', because it can
+* ___!kick___ kicks members so that they can rejoin the server all over again
 
 ## Images
 <img src="https://github.com/Jubessin/forHTNE/blob/main/helpfulbot3.PNG"
@@ -33,4 +33,4 @@ width = "400">
 
 ## Usage
 
-You can add HelpfulBot to your server through <a href="https://discord.com/api/oauth2/authorize?client_id=799792036071997460&permissions=0&scope=bot">this link!</a>
+You can add HelpfulBot to your server through <a href="https://discord.com/api/oauth2/authorize?client_id=799792036071997460&permissions=15952898&scope=bot">this link!</a>
