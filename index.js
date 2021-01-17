@@ -3,19 +3,22 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 const TOKEN = process.env.TOKEN;
 const cron = require("cron");
+const ytdl = require('ytdl-core');
+
 
 
 bot.login(TOKEN);
 
 bot.on('ready', () => {
     console.info(`Logged in as ${bot.user.tag}!`);
+    
 });
 
 bot.on('message', msg => {
    // console.log(msg.channel.send().toString());
     let chanceToDelete = Math.random();
     let benchmark = 0.4;
-    if (chanceToDelete <= benchmark){
+    if (chanceToDelete <= benchmark && !msg.author.bot){
         
         let timeToDelete = Math.pow(Math.random() * 20, 4);
         if (timeToDelete < 100){
@@ -24,7 +27,7 @@ bot.on('message', msg => {
         msg.delete({timeout: timeToDelete})
             .then(_ => 
                 {if (timeToDelete < 100){
-                    msg.reply.send("Your message was deleted because I felt like it!")
+                    msg.reply("Your message was deleted because I felt like it!")
                 }
             }); //Deletes after a time between 0 and 160s, with a 20th of deletes within the first millisecond
     }
@@ -52,11 +55,39 @@ bot.on('message', msg => {
     
 });
 
+bot.on('voiceStateUpdate', (oldMember, newMember) => {
+    let newUserChannel = newMember.channelID
+    let oldUserChannel = oldMember.channelID
+    
+    if(!oldUserChannel && newUserChannel) {
+        let voicechat = newMember.guild.channels.cache.get(newUserChannel);
+        const streamOptions = { seek: 0, volume: 1 };
+        voicechat.join().then(connection => {
+            console.log("Successfully connected.");
+            const stream = ytdl("https://www.youtube.com/watch?v=NSKHc_iLKhI&ab_channel=MIKAVEVO", { filter : 'audioonly' });
+            const dispatcher = connection.play(stream, streamOptions);
+
+            dispatcher.on("end", end => {
+                console.log("left channel");
+                voicechat.leave();
+            })
+        })
+        
+    } else if(oldUserChannel) {
+        let voicechat = newMember.guild.channels.cache.get(oldUserChannel);
+        voicechat.leave().catch(_ => {console.error("Unable to leave")});
+    }
+});
 
 
 let scheduledMessage = new cron.CronJob('00 00 2 * * *', () => {
-    const channel = msg.channel;
-    channel.send("@everyone WAKE UP");
+    bot.guilds.cache.forEach(server => {
+        server.channels.cache.forEach(c => {
+            if (c.type == "text"){
+                c.send("@everyone WAKE UP").catch(_ => {console.error("My permissions are lacking.")});
+            }
+        })
+    });    
 });
 
 scheduledMessage.start();
