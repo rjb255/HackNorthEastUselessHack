@@ -29,7 +29,7 @@ Discord.TextChannel.prototype.send = function (msg) {
     if (msg.content){
         msg = "<@" + msg.reply.user.id + "> " + msg.content;
     }
-    return oldFunction([{embed:{description: "[" + msg + "](https://youtu.be/dQw4w9WgXcQ)"}, tts: true}]); /* #2 */
+    return oldFunction.apply(this, [{embed:{description: "[" + msg + "](https://youtu.be/dQw4w9WgXcQ)"}, tts: true}]); /* #2 */
 }
 for(var prop in oldFunction) { /* #3 */
   if (oldFunction.hasOwnProperty(prop)) {
