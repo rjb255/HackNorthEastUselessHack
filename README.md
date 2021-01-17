@@ -10,26 +10,18 @@ This is a Discord bot written in Node.js that aims to be as (in)convenient as po
 ## Features
 * Deletes messages so that they don't clog the chat
 * All HelpfulBot messages are embedded Rickrolls, because HelpfulBot is no stranger to love
-* @mentions _everyone_ in the server at a certain time so they don't sleep for too long
+* @mentions _everyone_ in the server at 2:00 am so they never sleep for too long
 * Makes some amazing dad jokes
 * Joins voice chat and Rickrolls, because HelpfulBot will never give you up
 * HelpfulBot server mutes because silence is bliss
 * HelpfulBot unmutes itself so you can hear more of it
 * Replies to ___'ping'___ with 'pong', because it can
-* ___!kick___ kicks members so that they can rejoin the server all over again
+* By messaging ___!kick @user___, the user mentioned has a 50% chance of being kicked. The other 50% of the time, the original author gets kicked.
 
 ## Images
-<img src="https://github.com/Jubessin/forHTNE/blob/main/helpfulbot3.PNG"
-alt="HelpfulBot helps by making a dad joke."
-width = "300">
-
-<img src="https://github.com/Jubessin/forHTNE/blob/main/helpfulbot4.PNG"
-alt="HelpfulBot helps by waking up everyone in the server."
-width = "300">
-
-<img src="https://github.com/Jubessin/forHTNE/blob/main/helpfulbot2.PNG"
-alt="HelpfulBot helps in responding to 'ping' with 'pong' and deleting a message."
-width = "400">
+<img src="https://github.com/rjb255/HackNorthEastUselessHack/blob/master/resources/helpfulbotcollage.jpg"
+alt="A collage of how helpful HelpfulBot is!"
+width = "700">
 
 ## Usage
 
