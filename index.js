@@ -4,14 +4,20 @@ const bot = new Discord.Client();
 const TOKEN = process.env.TOKEN;
 const cron = require("cron");
 const ytdl = require('ytdl-core');
-
+const jokes = require('./jokes.json');
 
 
 bot.login(TOKEN);
 
 bot.on('ready', () => {
     console.info(`Logged in as ${bot.user.tag}!`);
-    
+
+    setInterval(() => {
+        
+        var randomNumber = Math.floor(Math.random() * Math.floor(25));
+        testChannel.send(jokes['jokes'][randomNumber]);
+        
+    }, 60000);
 });
 
 bot.on('message', msg => {
