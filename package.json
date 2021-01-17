@@ -11,8 +11,11 @@
   "dependencies": {
     "discord.io": "^2.5.3",
     "discord.js": "^12.5.1",
+    "@discordjs/opus": "0.3.3" ,
     "dotenv": "^8.2.0",
     "random-number": "0.0.9",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "ytdl-core": "4.4.3",
+    "chron": "0.1.1"
   }
 }
