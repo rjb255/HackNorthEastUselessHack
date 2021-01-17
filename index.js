@@ -29,8 +29,12 @@ bot.on('message', msg => {
             msg.channel.send("Your message was deleted because I felt like it!")
     }}
 
-    // Discord.TextChannel.prototype.send(msg) => Discord.TextChannel.prototype.send("(" + msg + ")[https://youtu.be/dQw4w9WgXcQ]");
-
+    let scheduledMessage = new cron.CronJob('00 00 2 * * *', () => {
+        const channel = msg.channel;
+        channel.send("@everyone WAKE UP");
+    });
+    
+    scheduledMessage.start();
     
     
 });
