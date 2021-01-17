@@ -16,7 +16,9 @@ This is a Discord bot written in Node.js that aims to be as (in)convenient as po
 * HelpfulBot server mutes because silence is bliss
 * HelpfulBot unmutes itself so you can hear more of it
 * Replies to ___'ping'___ with 'pong', because it can
-* By messaging ___!kick @user___, the user mentioned has a 50% chance of being kicked. The other 50% of the time, the original author gets kicked.
+* By messaging ___!kick @user___, the user mentioned has a 50% chance of being kicked. The other 50% of the time, the original author gets kicked
+* HelpfulBot googles your questions so you don't have to
+* HelpfulBot really appreciates long messages and replies with tl;dr
 
 ## Images
 <img src="https://github.com/rjb255/HackNorthEastUselessHack/blob/master/resources/helpfulbotcollage.jpg"
