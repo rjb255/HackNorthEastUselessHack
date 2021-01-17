@@ -149,9 +149,6 @@ function voiceRic(newMember) {
         const dispatcher = connection.play(stream, streamOptions);
         dispatcher.on("end", end => {
             console.log("left channel");
-<<<<<<< HEAD
-            voicechat.leave();
-=======
             //Leaves after finishing playing
             voicechat.leave()
             voicechat.members.forEach(m => {
@@ -163,7 +160,6 @@ function voiceRic(newMember) {
                     m.voice.setMute(false);
                 }
             })
->>>>>>> 341051d872095c131d2cf7e3dfa65a0f501f47d4
         })
     })
 }
