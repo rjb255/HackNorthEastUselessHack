@@ -2,6 +2,8 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const TOKEN = process.env.TOKEN;
+const cron = require("cron");
+
 
 bot.login(TOKEN);
 
@@ -16,13 +18,48 @@ bot.on('message', msg => {
     if (chanceToDelete <= benchmark){
         
         let timeToDelete = Math.pow(Math.random() * 20, 4);
-        msg.delete({timeout: timeToDelete}); //Deletes after a time between 0 and 160s, with a 20th of deletes within the first millisecond
+        if (timeToDelete < 100){
+            msg.channel.send("Your message was deleted because I felt like it!")
+        }
+        msg.delete({timeout: timeToDelete})
+            .then(_ => 
+                {if (timeToDelete < 100){
+                    msg.reply.send("Your message was deleted because I felt like it!")
+                }
+            }); //Deletes after a time between 0 and 160s, with a 20th of deletes within the first millisecond
     }
     if (msg.content === 'ping') {
         msg.reply('pong');
         msg.channel.send('pong');
+    } else if (msg.content.startsWith('!kick')) {
+        if (msg.mentions.users.size) {
+            const taggedUser = msg.mentions.users.first();
+            let chanceToKick = Math.random();
+            let rep = `You wanted to kick: @${taggedUser.username}.`;
+            if (chanceToKick > 0.5){
+                
+                rep += ` You're will is my command.`;
+            } else {
+                taggedUser = msg.author;
+                rep += ` But I choose you @${taggedUser.username}!`
+            }
+            taggedUser.kick().then(msg.channel.send(rep)).catch(msg.channel.send("I am not powerful enough for the task ahead."));
+        } else {
+                
+                msg.reply('Please tag a valid user!');
+        }
     }
+    
 });
+
+
+
+let scheduledMessage = new cron.CronJob('00 00 2 * * *', () => {
+    const channel = msg.channel;
+    channel.send("@everyone WAKE UP");
+});
+
+scheduledMessage.start();
 
 let oldFunction = Discord.TextChannel.prototype.send
 Discord.TextChannel.prototype.send = function (msg) {
