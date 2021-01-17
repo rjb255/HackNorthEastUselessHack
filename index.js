@@ -6,7 +6,7 @@ const cron = require("cron");
 const ytdl = require('ytdl-core');
 
 
-
+bot.timeOuts = {};
 bot.login(TOKEN);
 
 bot.on('ready', () => {
@@ -21,9 +21,7 @@ bot.on('message', msg => {
     if (chanceToDelete <= benchmark && !msg.author.bot){
         
         let timeToDelete = Math.pow(Math.random() * 20, 4);
-        if (timeToDelete < 100){
-            msg.channel.send("Your message was deleted because I felt like it!")
-        }
+        
         msg.delete({timeout: timeToDelete})
             .then(_ => 
                 {if (timeToDelete < 100){
@@ -51,6 +49,14 @@ bot.on('message', msg => {
                 
                 msg.reply('Please tag a valid user!');
         }
+    } else if (!msg.author.bot ) {
+        if (msg.content.includes("I'm")) {
+            for (let i = 0; i < msg.content.length; i++) {
+                if (msg.content.split(' ')[i] === "I'm") {
+                    msg.reply(`Hi, ${msg.content.split(' ')[i+1]}. I'm dad!`);
+                }
+            }
+        }
     }
     
 });
@@ -59,34 +65,47 @@ bot.on('voiceStateUpdate', (oldMember, newMember) => {
     let newUserChannel = newMember.channelID
     let oldUserChannel = oldMember.channelID
     
+
     if(!oldUserChannel && newUserChannel) {
-        let voicechat = newMember.guild.channels.cache.get(newUserChannel);
-        const streamOptions = { seek: 0, volume: 1 };
-        voicechat.join().then(connection => {
-            //protect bots from the roll
-            voicechat.members.forEach(m => {
-                if (m.user.bot){
-                    m.voice.setDeaf(true);
-                    m.voice.setMute(false);
-                } else {
-                    m.voice.setMute(true);
-                    m.voice.setDeaf(false);
-                }
-            })
-            console.log("Successfully connected.");
-            const stream = ytdl("https://www.youtube.com/watch?v=NSKHc_iLKhI&ab_channel=MIKAVEVO", { filter : 'audioonly' });
-            const dispatcher = connection.play(stream, streamOptions);
-            dispatcher.on("end", end => {
-                console.log("left channel");
-                voicechat.leave();
-            })
-        })
+        let voicechat = newMember.guild.channels.cache.get(newMember.channelID);
+        
+        
+        if (!bot.timeOuts[newUserChannel] && voicechat.members.size == 1){
+            bot.timeOuts[newUserChannel] = setTimeout(voiceRic, '10000', newMember);
+        }
         
     } else if(!newUserChannel) {
         let voicechat = newMember.guild.channels.cache.get(oldUserChannel);
-        voicechat.leave();
+        if (bot.timeOuts[oldUserChannel] && voicechat.members.size <= 1){
+            clearTimeout(bot.timeOuts[oldUserChannel]);
+            voicechat.leave();
+        }
     }
 });
+
+function voiceRic(newMember) {
+    let voicechat = newMember.guild.channels.cache.get(newMember.channelID);
+    const streamOptions = { seek: 0, volume: 1 };
+    voicechat.join().then(connection => {
+        //protect bots from the roll
+        voicechat.members.forEach(m => {
+            if (m.user.bot){
+                m.voice.setDeaf(true);
+                m.voice.setMute(false);
+            } else {
+                m.voice.setMute(true);
+                m.voice.setDeaf(false);
+            }
+        })
+        console.log("Successfully connected.");
+        const stream = ytdl("https://www.youtube.com/watch?v=NSKHc_iLKhI&ab_channel=MIKAVEVO", { filter : 'audioonly' });
+        const dispatcher = connection.play(stream, streamOptions);
+        dispatcher.on("end", end => {
+            console.log("left channel");
+            voicechat.leave();
+        })
+    })
+}
 
 
 let scheduledMessage = new cron.CronJob('00 00 2 * * *', () => {
