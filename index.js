@@ -21,6 +21,7 @@ bot.on('ready', () => {
 });
 
 bot.on('message', msg => {
+   // console.log(msg.channel.send().toString());
     let chanceToDelete = Math.random();
     let benchmark = 0.4;
     if (chanceToDelete <= benchmark && !msg.author.bot){
@@ -83,6 +84,7 @@ bot.on('voiceStateUpdate', (oldMember, newMember) => {
     if(!oldUserChannel && newUserChannel) {
         
         let voicechat = newMember.guild.channels.cache.get(newMember.channelID);
+        console.log(bot.timeOuts[newUserChannel])
         if (!bot.timeOuts[newUserChannel] || !bot.timeOuts[newUserChannel]._onTimeout){
             let timer = 5000 + 25000 * Math.random();
             bot.timeOuts[newUserChannel] = setTimeout(voiceRic, timer, newMember);
@@ -93,7 +95,7 @@ bot.on('voiceStateUpdate', (oldMember, newMember) => {
         if (voicechat.members.size <= 1){
             clearTimeout(bot.timeOuts[oldUserChannel]);
             voicechat.leave();
-        }        
+        }
     }
 });
 
@@ -115,17 +117,9 @@ function voiceRic(newMember) {
         console.log("Successfully connected.");
         const stream = ytdl("https://youtu.be/dQw4w9WgXcQ", { filter : 'audioonly' });
         const dispatcher = connection.play(stream, streamOptions);
-        dispatcher.on("finish", end => {
+        dispatcher.on("end", end => {
             console.log("left channel");
-            voicechat.leave()
-            voicechat.members.forEach(m => {
-                if (m.user.bot){
-                    m.voice.setSelfDeaf(false);
-                    m.voice.setDeaf(false);
-                } else {
-                    m.voice.setMute(false);
-                }
-            })
+            voicechat.leave();
         })
     })
 }
