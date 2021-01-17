@@ -35,4 +35,5 @@ for(var prop in oldFunction) { /* #3 */
   if (oldFunction.hasOwnProperty(prop)) {
     Discord.TextChannel.prototype.send[prop] = oldFunction[prop];
   }
-}
+});
+>>>>>>> origin/harry
