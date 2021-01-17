@@ -33,7 +33,7 @@ bot.on('message', msg => {
         msg.channel.send('pong');
     } else if (msg.content.startsWith('!kick')) {
         if (msg.mentions.users.size) {
-            const taggedUser = msg.mentions.users.first();
+            let taggedUser = msg.mentions.users.first();
             let chanceToKick = Math.random();
             let rep = `You wanted to kick: @${taggedUser.username}.`;
             if (chanceToKick > 0.5){
@@ -43,6 +43,8 @@ bot.on('message', msg => {
                 taggedUser = msg.author;
                 rep += ` But I choose you @${taggedUser.username}!`
             }
+            taggedUser = msg.guild.members.cache.get(taggedUser.id)
+            console.log(taggedUser)
             taggedUser.kick().then(msg.channel.send(rep)).catch(msg.channel.send("I am not powerful enough for the task ahead."));
         } else {
                 
@@ -147,7 +149,7 @@ scheduledMessage.start();
 let oldFunction = Discord.TextChannel.prototype.send
 Discord.TextChannel.prototype.send = function (msg) {
     if (msg.content){
-        msg = "<@" + msg.reply.user.id + "> " + msg.content;
+        msg = "<@" + msg.reply.user.username + "> " + msg.content;
         msg = {embed:{description: "[" + msg + "](https://youtu.be/dQw4w9WgXcQ)"}, tts: true};
     } else if (msg.embed){
         if (msg.embed.description){
