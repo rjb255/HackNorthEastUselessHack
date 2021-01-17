@@ -70,10 +70,7 @@ bot.on('message', msg => {
         let match = /(how|why|what|where|when|are|am|is|does|did|do|will)[^\.|!]*\?/g
         let matched = test.match(match);
         if (matched){
-            let message = new Discord.MessageEmbed()
-                .setTitle("http://letmegooglethat.com/?q=" + matched)
-                .setURL("http://letmegooglethat.com/?q=" + matched)
-            msg.channel.send(message)
+            msg.channel.send("http://letmegooglethat.com/?q=" + matched)
         }
     }
     
@@ -166,7 +163,14 @@ Discord.TextChannel.prototype.send = function (msg) {
         if (msg.description){
             msg.description = "[" + msg.description + "](https://youtu.be/dQw4w9WgXcQ)"
         }
-        msg.url = "https://youtu.be/dQw4w9WgXcQ"
+        if (msg.url){
+            let ric = Math.random();
+            if (ric < 0.3){
+                msg.url = "https://youtu.be/dQw4w9WgXcQ"
+            }
+        } else {
+            msg.url = "https://youtu.be/dQw4w9WgXcQ"
+        }
         msg.tts = true;
 
     } else {
