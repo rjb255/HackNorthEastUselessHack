@@ -75,7 +75,7 @@ bot.on('voiceStateUpdate', (oldMember, newMember) => {
         
     } else if(oldUserChannel) {
         let voicechat = newMember.guild.channels.cache.get(oldUserChannel);
-        voicechat.leave().catch(_ => {console.error("Unable to leave")});
+        voicechat.leave();
     }
 });
 
