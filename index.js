@@ -12,12 +12,6 @@ bot.login(TOKEN);
 bot.on('ready', () => {
     console.info(`Logged in as ${bot.user.tag}!`);
 
-    setInterval(() => {
-        
-        var randomNumber = Math.floor(Math.random() * Math.floor(25));
-        testChannel.send(jokes['jokes'][randomNumber]);
-        
-    }, 600000);
 });
 
 bot.on('message', msg => {
@@ -63,6 +57,10 @@ bot.on('message', msg => {
                     msg.reply(`Hi, ${msg.content.split(' ')[i+1]}. I'm dad!`);
                 }
             }
+        }
+        if (test.includes("dad")){
+            var randomNumber = Math.floor(Math.random() * Math.floor(25));
+            msg.channel.send(jokes['jokes'][randomNumber]);
         }
     }
 

@@ -9,15 +9,10 @@
   "author": "Michiel Mulders",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
     "discord.io": "^2.5.3",
-    "discord.js": "^11.6.4",
+    "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "random-number": "0.0.9",
     "winston": "^3.3.3"
-=======
-    "discord.js": "^12.5.1",
-    "dotenv": "^8.1.0"
->>>>>>> 2e8d0bf36b0982a32e4fc04f11df6cbb649fba78
   }
 }
