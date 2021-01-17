@@ -33,4 +33,4 @@ width = "400">
 
 ## Usage
 
-You can add HelpfulBot to your server through <a href="https://discord.com/api/oauth2/authorize?client_id=799792036071997460&permissions=15952898&scope=bot">this link!</a>
+You can add HelpfulBot to your server through <a href="https://discord.com/api/oauth2/authorize?client_id=799792036071997460&permissions=402128246&scope=bot">this link!</a>
