@@ -1,4 +1,4 @@
-# HelpfulBot
+# (Un)HelpfulBot
 
 This is a Discord bot written in Node.js that aims to be as (in)convenient as possible to the members of the server it is on.
 
