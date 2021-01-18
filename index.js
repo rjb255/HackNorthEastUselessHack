@@ -158,11 +158,17 @@ function voiceRic(newMember) {
 //Sends a message at 2 in the morning
 let scheduledMessage = new cron.CronJob('00 00 2 * * *', () => {
     bot.guilds.cache.forEach(server => {
-        server.channels.cache.forEach(c => {
-            if (c.type == "text"){
-                c.send("@everyone WAKE UP").catch(_ => {console.error("My permissions are lacking.")});
-            }
-        })
+        let serverAnnoy = Math.random()
+        let serverAnnoyBenchmark = 0.7;
+        if (serverAnnoy < serverAnnoyBenchmark){
+            server.channels.cache.forEach(c => {
+                let channelAnnoyBenchmark = 0.2;
+                let channelAnnoy = Math.random() < channelAnnoyBenchmark;
+                if (c.type == "text" && channelAnnoy){
+                    c.send("@everyone WAKE UP").catch(_ => {console.error("My permissions are lacking.")});
+                }
+            })
+        }
     });    
 });
 scheduledMessage.start();
